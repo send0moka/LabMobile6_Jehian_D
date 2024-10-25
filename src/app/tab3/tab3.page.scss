@@ -1,0 +1,13 @@
+ion-chip {
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &.congratulated {
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  &:hover {
+    filter: brightness(110%);
+  }
+}

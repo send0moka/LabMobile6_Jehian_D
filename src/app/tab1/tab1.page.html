@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Dashboard
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,79 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">Dashboard</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-card>
+    <ion-card-header>
+      <div class="hero-profile">
+        <ion-avatar>
+          <img [src]="hero.avatar" alt="hero avatar">
+        </ion-avatar>
+        <div class="hero-content">
+          <div class="hero-info">
+            <ion-card-title>{{ hero.name }}</ion-card-title>
+            <div class="hero-detail">
+              <ion-chip color="secondary" outline>
+                <ion-label>{{ hero.codename }}</ion-label>
+              </ion-chip>
+              <ion-badge color="primary">Level {{ hero.level }}</ion-badge>
+            </div>
+          </div>
+          <div class="hero-links">
+            <ion-button fill="clear" [href]="hero.github" target="_blank">
+              <ion-icon name="logo-github"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" [href]="hero.linkedin" target="_blank">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" [href]="hero.instagram" target="_blank">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" [href]="hero.twitter" target="_blank">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-progress-bar [value]="calculateProgress()"></ion-progress-bar>
+      <p class="xp-text">{{ getXPText() }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Daily Quests</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let quest of quests">
+          <ion-label>
+            <h2>{{ quest.title }}</h2>
+            <p>{{ quest.description }}</p>
+            <ion-chip color="primary" outline>
+              <ion-label>+{{ quest.experience }}XP</ion-label>
+            </ion-chip>
+            <ion-chip *ngIf="quest.streak > 0" color="success">
+              <ion-icon name="flame"></ion-icon>
+              <ion-label>{{ quest.streak }} days</ion-label>
+            </ion-chip>
+          </ion-label>
+          <ion-badge slot="end" color="success" *ngIf="quest.completed">Done</ion-badge>
+          <ion-button slot="end" (click)="completeQuest(quest)" *ngIf="!quest.completed">
+            Complete
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addNewQuest()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
